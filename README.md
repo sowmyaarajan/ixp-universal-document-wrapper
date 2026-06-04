@@ -39,9 +39,9 @@ Your file (any format)
 │ Format                                  │ Backend              │
 ├─────────────────────────────────────────┼──────────────────────┤
 │ .png .jpg .jpeg .bmp .gif .tiff .webp   │ Pillow               │
-│ .docx .doc                              │ docx2pdf → Word COM  │
-│ .xlsx .xls .csv                         │ Excel COM            │
-│ .pptx .ppt                              │ PowerPoint COM       │
+│ .docx .doc                              │ docx2pdf → LibreOffice│
+│ .xlsx .xls .csv                         │ LibreOffice          │
+│ .pptx .ppt                              │ LibreOffice          │
 │ .pdf                                    │ Pass-through         │
 │ .zip                                    │ Extracts + processes │
 │ .msg .eml                               │ Extracts attachments │
@@ -53,7 +53,10 @@ Your file (any format)
 ## Prerequisites
 
 - Python 3.10+
-- Microsoft Office (Word, Excel, PowerPoint) — for Office format conversion
+- **LibreOffice** — for Office format conversion (DOCX, XLSX, PPTX, CSV)
+  - Windows: `winget install TheDocumentFoundation.LibreOffice`
+  - Linux: `apt-get install -y libreoffice`
+  - Install once on the robot template — no MS Office required
 - UiPath Automation Cloud account with an IXP project deployed
 
 ---
