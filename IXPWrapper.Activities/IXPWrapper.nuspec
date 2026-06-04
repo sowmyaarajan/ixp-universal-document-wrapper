@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>IXPWrapper.Activities</id>
+    <version>1.0.0</version>
+    <title>IXP Universal Document Wrapper Activities</title>
+    <authors>UiPath FDE Team</authors>
+    <description>
+      Process any document (DOCX, XLSX, PPTX, CSV, images, PDF) with UiPath IXP.
+      Drag-and-drop "Process Document with IXP" activity returns structured JSON
+      with extracted fields powered by Gemini 2.5 Flash.
+
+      Prerequisites:
+      - LibreOffice installed on the robot (see scripts/ folder for setup scripts)
+      - UiPath External Application with Du.Digitization.Api + Du.Extraction.Api scopes
+      - IXP project with field definitions deployed
+    </description>
+    <tags>IXP DocumentUnderstanding Extraction Invoice LibreOffice Gemini</tags>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/sowmyaarajan/ixp-universal-document-wrapper</projectUrl>
+  </metadata>
+  <files>
+    <file src="bin\Release\net6.0\IXPWrapper.Activities.dll" target="lib\net6.0" />
+    <file src="bin\Release\net6.0\IXPWrapper.Activities.deps.json" target="lib\net6.0" />
+    <file src="scripts\*" target="scripts" />
+  </files>
+</package>
