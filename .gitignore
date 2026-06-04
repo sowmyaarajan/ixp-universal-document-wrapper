@@ -27,6 +27,10 @@ example_files/
 *.suo
 *.user
 
+# Local dev files — not for repo
+CLAUDE.md
+How_to_RUN.txt
+
 # OS
 .DS_Store
 Thumbs.db
