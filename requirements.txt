@@ -1,0 +1,19 @@
+# Conversion
+Pillow>=10.0.0
+docx2pdf>=0.1.8
+pypdf>=4.0.0
+
+# API service
+fastapi>=0.110.0
+uvicorn>=0.29.0
+python-multipart>=0.0.9
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# Phase 2 - email processing
+extract-msg>=0.48.0
+
+# Dev / testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+python-pptx>=0.6.21
