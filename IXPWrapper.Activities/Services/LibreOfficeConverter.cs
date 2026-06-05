@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace IXPWrapper.Activities.Services
 {
@@ -96,21 +95,15 @@ namespace IXPWrapper.Activities.Services
             if (!string.IsNullOrEmpty(envPath) && File.Exists(envPath))
                 return envPath;
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                foreach (var path in WindowsPaths)
-                    if (File.Exists(path)) return path;
+            // Windows paths
+            foreach (var path in WindowsPaths)
+                if (File.Exists(path)) return path;
 
-                var which = FindInPath("soffice.exe");
-                if (which != null) return which;
-            }
-            else
+            // Try PATH (works for both Windows soffice.exe and Linux soffice)
+            foreach (var bin in new[] { "soffice.exe", "soffice", "libreoffice" })
             {
-                foreach (var bin in LinuxBinaries)
-                {
-                    var which = FindInPath(bin);
-                    if (which != null) return which;
-                }
+                var which = FindInPath(bin);
+                if (which != null) return which;
             }
 
             throw new InvalidOperationException(
