@@ -4,6 +4,10 @@ A reusable Python service that accepts any document (DOCX, XLSX, PPTX, CSV, imag
 
 > Drop any file in. Get structured JSON out.
 
+Two ways to use it:
+- **Python service** — REST API + Web UI, callable from any workflow or browser
+- **UiPath Activity** — drag-and-drop `.nupkg` for Studio workflows (no server needed)
+
 ## Quick Start
 
 ```bash
@@ -309,3 +313,58 @@ OK  IXP project is IN SYNC with code definition.
 > Fields must currently be added manually in the portal. Once UiPath exposes
 > the write API, this step will be automated. The `taxonomy_manager.py` is
 > ready to support it when available.
+
+---
+
+## UiPath Studio Activity (.nupkg)
+
+Use the wrapper as a native drag-and-drop activity — no Python server required.
+
+### Prerequisites
+- LibreOffice installed on the robot:
+  - **Windows:** run `IXPWrapper.Activities/scripts/Install-LibreOffice.ps1` (once, on robot template)
+  - **Linux:** run `IXPWrapper.Activities/scripts/install-libreoffice.sh` (once, on robot template)
+
+### Build the .nupkg
+```bash
+cd IXPWrapper.Activities
+dotnet build -c Release
+dotnet pack -c Release --no-build
+# Output: bin/Release/IXPWrapper.Activities.1.0.0.nupkg
+```
+
+### Install in UiPath Studio
+1. **Manage Packages -> Settings -> Add source (+)**
+   - Name: `IXPWrapper-Local`
+   - Source: path to `IXPWrapper.Activities/bin/Release/` folder
+2. Click **Save**
+3. Click **IXPWrapper-Local** in the left sidebar
+4. Select **IXP Universal Document Wrapper Activities** -> **Install** -> **Save**
+
+### Use in a workflow
+Drag **"Process Document with IXP"** from the Activities panel into your sequence.
+
+**Input properties:**
+
+| Property | Example value |
+|----------|--------------|
+| File Path | `"C:\Docs\invoice.docx"` |
+| UiPath Host | `"https://cloud.uipath.com"` |
+| Client ID | from External Application |
+| Client Secret | from External Application |
+| Org UUID | from DU API discovery script |
+| Tenant UUID | from DU API discovery script |
+| Project ID | IXP project UUID |
+| Extractor ID | `"gpt_ixp_5"` (run `setup.py` to find) |
+| Timeout Seconds | `300` |
+
+**Output properties:** `Status`, `Fields` (Dictionary), `Confidence`, `DocumentType`, `Pages`, `ProcessingTimeMs`
+
+**Log extracted fields:**
+```vb
+Dim result As New Dictionary(Of String, Object)
+result("status") = out_Status
+result("fields") = out_Fields
+out_Json = Newtonsoft.Json.JsonConvert.SerializeObject(result, Newtonsoft.Json.Formatting.Indented)
+Log Message: out_Json
+```
